@@ -1,6 +1,6 @@
-#uppercasems
+# uppercasems
 
-##Overview
+## Overview
 A simple Containerised Springboot based microservice that will convert strings to uppercase.
 
 Project uses maven.
