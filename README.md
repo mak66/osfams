@@ -7,7 +7,7 @@ Project uses maven.
 
 The **build** script generates the docker container **uppercasems**. This assumes that the maven build has already created the jar file ready for deployment.
 
-  docker run -p 8090:8090 --rm uppercasems
+    docker run -p 8090:8090 --rm uppercasems
 
 There is also simple Jenkins pipeline defined in **Jenkinsfile** which runs the build and tests to ensure everything is OK.
 
