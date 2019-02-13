@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build --rm -t uppercasems:latest .
+docker build --rm -t osfamicroservice:latest .

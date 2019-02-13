@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.uppercase;
+package com.example.osfamicroservice.controllers;
 
+import com.example.osfamicroservice.controllers.UppercaseController;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
