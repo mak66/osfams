@@ -19,8 +19,12 @@ public class UppercaseController {
     
     @CrossOrigin
     @GetMapping("/{intext}")
-    public String touppercase(@PathVariable String intext){
-        return intext.toUpperCase();
+    public String toUppercase(@PathVariable String intext){
+        if (intext != null){
+            return intext.toUpperCase();
+        }
+        
+        return "upper case of nothing IS NOTHING!!!!!";
     }
     
     
