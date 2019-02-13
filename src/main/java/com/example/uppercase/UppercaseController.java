@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class UppercaseController {
-    
+       
     @CrossOrigin
     @GetMapping("/{intext}")
     public String toUppercase(@PathVariable String intext){
+        System.out.println("uppercasems:Requested["+intext+"]");
         if (intext != null){
             return intext.toUpperCase();
         }
