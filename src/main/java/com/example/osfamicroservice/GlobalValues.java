@@ -15,6 +15,16 @@ public class GlobalValues {
 
     private static String OSFAMS_SERVICE;
     private static int TIME_TO_LIVE;
+    private static String CHAINED_MS;
+    public final static String NO_URL= "--none--";
+
+    public static String getCHAINED_MS() {
+        return (CHAINED_MS == null )? NO_URL : CHAINED_MS;
+    }
+
+    public static void setCHAINED_MS(String CHAINED_MS) {
+        GlobalValues.CHAINED_MS = CHAINED_MS;
+    }
 
     public static int getTIME_TO_LIVE() {
         return TIME_TO_LIVE;
@@ -49,6 +59,12 @@ public class GlobalValues {
     public void autoSetOTimeToLive(@Value("${OSFAMS.TIME.TO.LIVE:5}") String inval){
         setTIME_TO_LIVE(Integer.parseInt(inval));
         System.out.println("***>MicroService running with T2L ["+GlobalValues.getTIME_TO_LIVE()+"]");
+    }
+    @Autowired
+    public void autoSetCHAINEDMS(@Value("${OSFAMS.CHAINED.MS:"+NO_URL+"}") String inval){
+        if (inval == null) return;
+        setCHAINED_MS(inval);
+        System.out.println("***>MicroService running chained to ["+GlobalValues.getCHAINED_MS()+"]");
     }
 
 }

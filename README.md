@@ -6,6 +6,9 @@ A simple Containerised Springboot based microservice that can be spun up to prov
 
 Simulate container failure by supplying a count of requests to be processed before exiting with the environment variable OSFAMS_TIME_TO_LIVE
 
+Chain further ms by specifying the address:port of next MS in Chain
+    -e OSFAMS_CHAINED_MS='somehost:port'
+
 Project uses maven.
 
 The **build** script generates the docker container **osfamicroservice**. This assumes that the maven build has already created the jar file ready for deployment.

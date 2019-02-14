@@ -167,7 +167,7 @@ public class OSFAMicroServiceControllerTest {
         String intext = "";
         GlobalValues.initGlobals("braced", 5);
         OSFAMicroServiceController instance = new OSFAMicroServiceController();
-        String expResult = "{}";
+        String expResult = "[]";
         String result = instance.doTransformation(intext);
         assertEquals(expResult, result);
     }
@@ -177,7 +177,7 @@ public class OSFAMicroServiceControllerTest {
         String intext = "banana";
         GlobalValues.initGlobals("braced", 5);
         OSFAMicroServiceController instance = new OSFAMicroServiceController();
-        String expResult = "{banana}";
+        String expResult = "[banana]";
         String result = instance.doTransformation(intext);
         assertEquals(expResult, result);
     }
@@ -197,7 +197,7 @@ public class OSFAMicroServiceControllerTest {
 
     @Test
     public void testUnbracedNotNull() {
-        String intext = "{banana}";
+        String intext = "[banana]";
         GlobalValues.initGlobals("unbraced", 5);
         OSFAMicroServiceController instance = new OSFAMicroServiceController();
         String expResult = "banana";
@@ -207,30 +207,30 @@ public class OSFAMicroServiceControllerTest {
 
     @Test
     public void testUnbracedMultiple() {
-        String intext = "{{a}}";
+        String intext = "[[a]]";
         GlobalValues.initGlobals("unbraced", 5);
         OSFAMicroServiceController instance = new OSFAMicroServiceController();
-        String expResult = "{a}";
+        String expResult = "[a]";
         String result = instance.doTransformation(intext);
         assertEquals(expResult, result);
     }
 
     @Test
     public void testUnbracedStartOnly() {
-        String intext = "{a";
+        String intext = "[a";
         GlobalValues.initGlobals("unbraced", 5);
         OSFAMicroServiceController instance = new OSFAMicroServiceController();
-        String expResult = "{a";
+        String expResult = "[a";
         String result = instance.doTransformation(intext);
         assertEquals(expResult, result);
     }
 
     @Test
     public void testUnbracedEndOnly() {
-        String intext = "a}";
+        String intext = "a]";
         GlobalValues.initGlobals("unbraced", 5);
         OSFAMicroServiceController instance = new OSFAMicroServiceController();
-        String expResult = "a}";
+        String expResult = "a]";
         String result = instance.doTransformation(intext);
         assertEquals(expResult, result);
     }

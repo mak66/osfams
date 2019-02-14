@@ -6,10 +6,15 @@
 package com.example.osfamicroservice.controllers;
 
 import com.example.osfamicroservice.GlobalValues;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -34,22 +39,25 @@ public class OSFAMicroServiceController {
         // assuming we have some text then return the apply appropriate transition and return the new value
         // based on the function we are running as
         if (intext != null) {
+            String retVal;
             switch (GlobalValues.getOSFAMS_SERVICE()) {
                 case "upper":
-                    return toUpperService(intext);
-
+                    retVal = toUpperService(intext);
+                    break;
                 case "lower":
-                    return toLowerCase(intext);
-
+                    retVal = toLowerCase(intext);
+                    break;
                 case "braced":
-                    return toBraced(intext);
-
-                case "unbraced":
-                    return toUnbraced(intext);
-                default:
-                    return "unsupported function";
-
+                    retVal = toBraced(intext);
+                    break;
+               case "unbraced":
+                    retVal = toUnbraced(intext);
+                    break;
+               default:
+                    retVal = "unsupported function";
+                    break;
             }
+            return callOtherMS(retVal);
         }
 
         return GlobalValues.getOSFAMS_SERVICE() + " of nothing IS NOTHING!!!!!";
@@ -65,19 +73,34 @@ public class OSFAMicroServiceController {
         return intext.toLowerCase();
     }
 
-    //return string enclosed in curlies
+    //return string enclosed in sq braces
     private String toBraced(String intext) {
-        return "{" + intext + "}";
+        return "[" + intext + "]";
     }
 
-    //return string with the first matched set of outer curlies removed
+    //return string with the first matched set of outer sq braces removed
     private String toUnbraced(String intext) {
         //look for a curly at the startand end of the string and remove 1 set
-        if (intext.startsWith("{") && intext.endsWith("}")) {
+        if (intext.startsWith("[") && intext.endsWith("]")) {
             intext = intext.substring(1,intext.length() - 1);
         
         }
         return intext;
     }
+
+    //make call out to other microservice
+    private String callOtherMS(String intext){
+        //if we don't have a chained MS then can't call it
+        if (GlobalValues.getCHAINED_MS().equalsIgnoreCase(GlobalValues.NO_URL)) return intext;
+        
+            RestTemplate restTemplate = new RestTemplate();
+            String targetURL;
+            targetURL = "http://"+GlobalValues.getCHAINED_MS()+"/"+intext;
+            System.out.println("targetURL=["+targetURL+"]");
+            String retVal = restTemplate.getForObject(targetURL, String.class);
+            
+        return retVal;
+    }
+
 
 }
