@@ -186,7 +186,7 @@ public class OSFAMicroServiceControllerTest {
      * Test unbraced functionality of class OSFAMicroServiceController.
      */
     @Test
-    public void testTUnbracedEmpty() {
+    public void testUnbracedEmpty() {
         String intext = "";
         GlobalValues.initGlobals("unbraced", 5);
         OSFAMicroServiceController instance = new OSFAMicroServiceController();
@@ -231,6 +231,28 @@ public class OSFAMicroServiceControllerTest {
         GlobalValues.initGlobals("unbraced", 5);
         OSFAMicroServiceController instance = new OSFAMicroServiceController();
         String expResult = "a]";
+        String result = instance.doTransformation(intext);
+        assertEquals(expResult, result);
+    }
+    /**
+     * Test reversed functionality of class OSFAMicroServiceController.
+     */
+    @Test
+    public void testReversedEmpty() {
+        String intext = "";
+        GlobalValues.initGlobals("reversed", 5);
+        OSFAMicroServiceController instance = new OSFAMicroServiceController();
+        String expResult = "";
+        String result = instance.doTransformation(intext);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testreversedNotNull() {
+        String intext = "[banana]";
+        GlobalValues.initGlobals("reversed", 5);
+        OSFAMicroServiceController instance = new OSFAMicroServiceController();
+        String expResult = "]ananab[";
         String result = instance.doTransformation(intext);
         assertEquals(expResult, result);
     }
