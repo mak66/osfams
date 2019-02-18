@@ -127,7 +127,7 @@ public class OSFAMicroServiceController {
         
             RestTemplate restTemplate = new RestTemplate();
             String targetURL;
-            targetURL = "http://mongoms:8089/logentry/"+
+            targetURL = "http://mongoms:8080/logentry/"+
                     GlobalValues.getSERVICE()+"/"+
                     data + "/" +
                     GlobalValues.getTIME_TO_LIVE() + "/" +
