@@ -6,7 +6,6 @@
 package com.example.osfamicroservice.controllers;
 
 import com.example.osfamicroservice.GlobalValues;
-import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -127,7 +126,7 @@ public class OSFAMicroServiceController {
         
             RestTemplate restTemplate = new RestTemplate();
             String targetURL;
-            targetURL = "http://mongoms:8080/logentry/"+
+            targetURL = GlobalValues.getLOGGING_URL()+
                     GlobalValues.getSERVICE()+"/"+
                     data + "/" +
                     GlobalValues.getTIME_TO_LIVE() + "/" +

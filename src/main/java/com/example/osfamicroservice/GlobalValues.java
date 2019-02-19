@@ -20,6 +20,7 @@ public class GlobalValues {
     private static int TIME_TO_LIVE;
     private static String CHAINED_MS;
     public final static String NO_URL= "--none--";
+    private static String LOGGING_URL;
 
     public static String getCHAINED_MS() {
         return (CHAINED_MS == null )? NO_URL : CHAINED_MS;
@@ -52,6 +53,18 @@ public class GlobalValues {
         setSERVICE(service);
         setTIME_TO_LIVE(time_to_live);
     }
+    public static void initGlobals(String service, int time_to_live,String loggingUrl){
+        initGlobals(service,time_to_live);
+        setLOGGING_URL(loggingUrl);
+    }
+
+    public static String getLOGGING_URL() {
+        return LOGGING_URL;
+    }
+
+    public static void setLOGGING_URL(String aLOGGING_URL) {
+        LOGGING_URL = aLOGGING_URL;
+    }
 
     @Autowired
     public void autoSetOsfamService(@Value("${OSFAMS.SERVICE:upper}") String inval){
@@ -63,6 +76,13 @@ public class GlobalValues {
         setTIME_TO_LIVE(Integer.parseInt(inval));
         log.info("***>MicroService running with T2L ["+GlobalValues.getTIME_TO_LIVE()+"]");
     }
+    @Autowired
+    public void autoSetLOGGINGURL(@Value("${OSFAMS.LOGGING.URL:"+NO_URL+"}") String inval){
+        if (inval == null) return;
+        setLOGGING_URL(inval);
+        log.info("***>MicroService logging to ["+GlobalValues.getLOGGING_URL()+"]");
+    }
+
     @Autowired
     public void autoSetCHAINEDMS(@Value("${OSFAMS.CHAINED.MS:"+NO_URL+"}") String inval){
         if (inval == null) return;
