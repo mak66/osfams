@@ -126,12 +126,13 @@ public class OSFAMicroServiceController {
         
             RestTemplate restTemplate = new RestTemplate();
             String targetURL;
-            targetURL = GlobalValues.getLOGGING_URL()+"/"+
+             targetURL = GlobalValues.getLOGGING_URL()+"/"+
                     GlobalValues.getSERVICE()+"/"+
                     data + "/" +
                     GlobalValues.getTIME_TO_LIVE() + "/" +
                     result;
             
+            log.info(targetURL);
             String retVal;
             try{
                 retVal = restTemplate.getForObject(targetURL, String.class);
