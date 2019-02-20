@@ -1,25 +1,10 @@
-pipeline {
-    agent {
-        docker {
-            image 'maven:3-alpine'
-            args '-v /root/.m2:/root/.m2'
-        }
-    }
-    stages {
-        stage('Build') {
-            steps {
-                sh 'mvn -B -DskipTests clean package'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
-    }
-}
+@Library('global-pipeline')
+
+def Map JOB_ARGS = [
+    name: 'osfamicroservice',
+    version: '1.1.1',
+    docker_registry: 'docker-registry:5000',
+    language: 'Java'
+]
+
+dockerPipeline(JOB_ARGS)
