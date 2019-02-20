@@ -13,6 +13,9 @@ Chain further MicroService by specifying the address:port of next MicroService i
 Point at appropriate logging MS
     -e OSFAMS_LOGGING_URL='http://<somehost>:<someport>'
 
+Start the service on a particular port if default of 8090 is not what is wanted
+    -e OSFAMS_SERVER_PORT=someport
+
 
 Project uses maven.
 
