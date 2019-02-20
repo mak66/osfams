@@ -10,18 +10,24 @@ Simulate container failure by supplying a count of requests to be processed befo
 Chain further MicroService by specifying the address:port of next MicroService in the Chain
     -e OSFAMS_CHAINED_MS='somehost:port'
 
+Point at appropriate logging MS
+    -e OSFAMS_LOGGING_URL='http://<somehost>:<someport>'
+
+Start the service on a particular port if default of 8090 is not what is wanted
+    -e OSFAMS_SERVER_PORT=someport
+
 
 Project uses maven.
 
 
 The **build** script generates the docker container **osfamicroservice**. This assumes that the maven build has already created the jar file ready for deployment.
 
-    docker run -e OSFAMS_TIME_TO_LIVE='5' -e OSFAMS_SERVICE='upper' -p 8090:8090 --rm osfamicroservice
+    docker run -e OSFAMS_TIME_TO_LIVE='5' -e OSFAMS_LOGGING_URL='http://mongoms:8089' -e OSFAMS_SERVICE='upper' -p 8090:8090 --rm osfamicroservice
 
 
     docker run -e OSFAMS_CHAINED_MS='<some host>:someport'-e OSFAMS_TIME_TO_LIVE='3' -e OSFAMS_SERVICE='reversed' -p 8090:8090 --rm osfamicroservice
 
-    
+
 
 There is also simple Jenkins pipeline defined in **Jenkinsfile** which runs the build and tests to ensure everything is OK.
 

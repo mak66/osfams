@@ -6,7 +6,6 @@
 package com.example.osfamicroservice.controllers;
 
 import com.example.osfamicroservice.GlobalValues;
-import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -60,7 +59,12 @@ public class OSFAMicroServiceController {
                     retVal = "unsupported function";
                     break;
             }
-            return callOtherMS(retVal);
+            // call our chained service (might not be one but will return ok anyway)
+            retVal = callOtherMS(retVal);
+            //log our transaction to the db
+            logTransactionToMongoDB(intext,retVal);
+            //return the  updated (potentially) value
+            return retVal;
         }
 
         return GlobalValues.getSERVICE() + " of nothing IS NOTHING!!!!!";
@@ -116,6 +120,26 @@ public class OSFAMicroServiceController {
             
         return retVal;
     }
-
+    //log requests to our mongodb through our mongoms api
+    // **for the purposes of this exercise not bothered if it fails
+    private void logTransactionToMongoDB(String data,String result){
+        
+            RestTemplate restTemplate = new RestTemplate();
+            String targetURL;
+             targetURL = GlobalValues.getLOGGING_URL()+"/"+
+                    GlobalValues.getSERVICE()+"/"+
+                    data + "/" +
+                    GlobalValues.getTIME_TO_LIVE() + "/" +
+                    result;
+            
+            log.info(targetURL);
+            String retVal;
+            try{
+                retVal = restTemplate.getForObject(targetURL, String.class);
+            }catch(Exception ex){ // a bit naughty but for these purposes not crashing is good enough
+                log.error(ex.getMessage());
+            }
+            
+    }
 
 }
